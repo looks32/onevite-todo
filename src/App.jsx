@@ -1,5 +1,6 @@
 import { useReducer, useRef, useState } from 'react';
 import './App.css';
+import Header from './components/Header';
 import Editor from './components/Editor';
 import List from './components/List';
 import ExamUseReducer from './components/ExamUseReducer';
@@ -72,6 +73,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <Editor onCreate={onCreate} />
       <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
       <ExamUseReducer />
