@@ -1,4 +1,4 @@
-import { useReducer, useRef, useState } from 'react';
+import { useCallback, useReducer, useRef, useState } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Editor from './components/Editor';
@@ -57,19 +57,33 @@ function App() {
     });
   };
 
-  const onUpdate = (targetId) => {
+  // const onUpdate = (targetId) => {
+  //   dispatch({
+  //     type: 'UPDATE',
+  //     targetId: targetId,
+  //   });
+  // };
+
+  const onUpdate = useCallback((targetId) => {
     dispatch({
       type: 'UPDATE',
       targetId: targetId,
     });
-  };
+  }, []);
 
-  const onDelete = (targetId) => {
+  // const onDelete = (targetId) => {
+  //   dispatch({
+  //     type: 'DELETE',
+  //     targetId: targetId,
+  //   });
+  // };
+
+  const onDelete = useCallback((targetId) => {
     dispatch({
       type: 'DELETE',
       targetId: targetId,
     });
-  };
+  }, []);
 
   return (
     <>
