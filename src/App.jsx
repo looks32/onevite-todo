@@ -1,4 +1,10 @@
-import { useCallback, useReducer, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import './App.css';
 import Header from './components/Header';
 import Editor from './components/Editor';
@@ -40,6 +46,12 @@ function reducer(state, action) {
       return state;
   }
 }
+
+// 컴포넌트 외부에 설정
+export const TodoContext = createContext();
+
+// 여러가지 값들이 있지만 Provider를 중점으로 본다.
+// console.log(TodoContext);
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -88,8 +100,17 @@ function App() {
   return (
     <>
       <Header />
-      <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
+      <TodoContext.Provider
+        value={{
+          todos,
+          onCreate,
+          onUpdate,
+          onDelete,
+        }}
+      >
+        <Editor />
+        <List />
+      </TodoContext.Provider>
       <ExamUseReducer />
     </>
   );
