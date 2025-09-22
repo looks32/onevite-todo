@@ -1,6 +1,7 @@
 import {
   createContext,
   useCallback,
+  useMemo,
   useReducer,
   useRef,
   useState,
@@ -47,8 +48,9 @@ function reducer(state, action) {
   }
 }
 
-// 컴포넌트 외부에 설정
-export const TodoContext = createContext();
+// 기존의 Context 분리
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
 
 // 여러가지 값들이 있지만 Provider를 중점으로 본다.
 // console.log(TodoContext);
@@ -97,20 +99,24 @@ function App() {
     });
   }, []);
 
+  // useMemo를 통하여 다시는 바뀌지 않게 만든다.
+  const memoizedDispatch = useMemo(() => {
+    return {
+      onCreate,
+      onUpdate,
+      onDelete,
+    };
+  }, []);
+
   return (
     <>
       <Header />
-      <TodoContext.Provider
-        value={{
-          todos,
-          onCreate,
-          onUpdate,
-          onDelete,
-        }}
-      >
-        <Editor />
-        <List />
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
       <ExamUseReducer />
     </>
   );

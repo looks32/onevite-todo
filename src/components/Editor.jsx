@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from 'react';
-import { TodoContext } from '../App';
+import { TodoDispatchContext } from '../App';
 
 const Editor = () => {
   // const data = useContext(TodoContext);
@@ -7,7 +7,7 @@ const Editor = () => {
   // console.log(data);
 
   // 필요한 값만 구조분해 할당
-  const { onCreate } = useContext(TodoContext);
+  const { onCreate } = useContext(TodoDispatchContext);
 
   const [content, setCountent] = useState('');
   const contentRef = useRef();
